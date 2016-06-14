@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fili.alex.newsradiot.R;
-import fili.alex.newsradiot.news.News;
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<News> newsList = new ArrayList<>();
