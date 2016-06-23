@@ -1,62 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="350dp"
               xmlns:tools="http://schemas.android.com/tools"
-              android:layout_margin="16dp"
-              android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="16dp"
+              android:background="@android:color/white"
+              android:orientation="horizontal">
 
-    
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.7"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
+        android:layout_weight="0.7"
         android:orientation="vertical">
+
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/title"
-            tools:text="Red Hat Debuts Ansible 2.1, with Network Automation, Containers, Microsoft Windows, and Azure | Red Hat"
-            android:singleLine="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:textSize="18sp"
             android:maxLines="3"
+            android:singleLine="false"
+            android:textColor="#212121"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#212121"
-            android:layout_height="wrap_content"/>
+            tools:text="Red Hat Debuts Ansible 2.1, with Network Automation, Containers, Microsoft Windows, and Azure | Red Hat"/>
 
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/snippet"
-            tools:text="RALEIGH, N.C. — May 25, 2016 — Red Hat, Inc. (NYSE: RHT), the world’s leading provider of open source solutions, today announced the general availability of Ansible 2.1, the"
-            android:singleLine="false"
-            android:textSize="13sp"
-            android:ellipsize="end"
-            android:textColor="#212121"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"/>
+            android:ellipsize="end"
+            android:singleLine="false"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            tools:text="RALEIGH, N.C. — May 25, 2016 — Red Hat, Inc. (NYSE: RHT), the world’s leading provider of open source solutions, today announced the general availability of Ansible 2.1, the"/>
 
 
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/info"
-            tools:text="redhat.com • 28.05.2016 в 05:41"
-            android:singleLine="false"
-            android:maxLines="2"
-            android:textSize="12sp"
-            android:ellipsize="end"
-            android:textColor="#757575"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"/>
-        
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:singleLine="false"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            tools:text="redhat.com • 28.05.2016 в 05:41"/>
+
     </LinearLayout>
-    
+
     <ImageView
-        android:layout_width="80dp"
-        android:src="@mipmap/request_invite"
-        android:scaleType="centerCrop"
         android:id="@+id/pic"
-        android:layout_height="80dp"/>
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:scaleType="centerCrop"
+        />
 
 </LinearLayout>

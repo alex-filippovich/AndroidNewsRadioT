@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Новости для Радио-Т</string>
+    <string-array name="filters">
+        <item>Свежие</item>
+        <item>Обычные</item>
+        <item>Гиковские</item>
+    </string-array>
+
+    <string-array name="sorting">
+        <item>По приоретету</item>
+        <item>По дате добавления</item>
+        <item>По комментариям</item>
+        <item>По лайкам</item>
+    </string-array>
+
+    <string name="header_filter">Filter</string>
+    <string name="header_sorting">Sorting</string>
 </resources>

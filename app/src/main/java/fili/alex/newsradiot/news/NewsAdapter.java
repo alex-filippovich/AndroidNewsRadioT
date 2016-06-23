@@ -54,8 +54,11 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ((NewsViewHolder) holder).snippet.setText(news.snippet);
         ((NewsViewHolder) holder).info.setText(news.info());
 
-        if (news.pic != null) {
+        if (news.pic != null && !news.pic.isEmpty()) {
+            ((NewsViewHolder) holder).pic.setVisibility(View.VISIBLE);
             Picasso.with(context).load(news.pic).into(((NewsViewHolder) holder).pic);
+        } else {
+            ((NewsViewHolder) holder).pic.setVisibility(View.GONE);
         }
     }
 
