@@ -1,8 +1,9 @@
-package fili.alex.newsradiot.news;
+package fili.alex.newsradiot.net;
 
 
 import java.util.List;
 
+import fili.alex.newsradiot.model.NewsObject;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -20,7 +21,11 @@ public class NewsClient {
                 .create(NewsService.class);
     }
 
-    public Observable<List<News>> getNews(long date) {
+    public Observable<List<NewsObject>> getNewsList(long date) {
         return mClient.listNews(String.valueOf(date));
+    }
+
+    public Observable<NewsObject> getNews(String slug) {
+        return mClient.getNews(slug);
     }
 }

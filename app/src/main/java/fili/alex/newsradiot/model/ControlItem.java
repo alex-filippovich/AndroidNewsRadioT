@@ -1,4 +1,4 @@
-package fili.alex.newsradiot.controls;
+package fili.alex.newsradiot.model;
 
 public class ControlItem {
     private String name;

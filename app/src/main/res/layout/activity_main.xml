@@ -13,7 +13,7 @@
                                         android:layout_height="match_parent"
                                         android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
         android:orientation="vertical"
-        tools:context="fili.alex.newsradiot.MainActivity">
+        tools:context=".ui.MainActivity">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -37,16 +37,35 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent">-->
         <!--</FrameLayout>-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:id="@+id/info_about_recent_news"
+            android:gravity="center"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:layout_height="56dp"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/progress_bar"
+            android:layout_height="wrap_content"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/news_list"
+            android:layout_below="@+id/info_about_recent_news"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:clipToPadding="false"
             />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

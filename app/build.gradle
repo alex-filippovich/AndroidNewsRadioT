@@ -12,7 +12,10 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -28,11 +31,11 @@ android {
     packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processo'
     }
+
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
@@ -44,4 +47,9 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.1.0'
 
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    androidTestCompile 'junit:junit:4.12'
+    androidTestCompile('com.android.support.test:runner:0.5') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
 }

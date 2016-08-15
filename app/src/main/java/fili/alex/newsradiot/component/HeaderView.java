@@ -1,4 +1,4 @@
-package fili.alex.newsradiot;
+package fili.alex.newsradiot.component;
 
 import android.content.Context;
 import android.graphics.Canvas;

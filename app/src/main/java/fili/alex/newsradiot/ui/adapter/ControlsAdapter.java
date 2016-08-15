@@ -1,8 +1,6 @@
-package fili.alex.newsradiot.controls;
+package fili.alex.newsradiot.ui.adapter;
 
 
-import android.content.Context;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,58 +8,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import fili.alex.newsradiot.HeaderView;
-import fili.alex.newsradiot.ItemClickListener;
+import fili.alex.newsradiot.component.HeaderView;
+import fili.alex.newsradiot.component.ItemClickListener;
 import fili.alex.newsradiot.R;
+import fili.alex.newsradiot.model.Control;
+import fili.alex.newsradiot.model.ControlItem;
+import fili.alex.newsradiot.model.Filter;
+import fili.alex.newsradiot.model.FilterItem;
+import fili.alex.newsradiot.model.HeaderItem;
+import fili.alex.newsradiot.model.Sorting;
+import fili.alex.newsradiot.model.SortingItem;
 
 public class ControlsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<ControlItem> controlItems;
-    private int activeFilters;
+    private List<ControlItem> controlItems = new ArrayList<>();
+    @Filter
+    private int activeFilter;
     @Sorting
     private int activeSorting;
-    Context context;
+    private ControlListener controlListener;
 
-    public ControlsAdapter(Context context, List<ControlItem> controlItems, int filters, @Sorting int activeSorting) {
-        this.context = context;
-        this.controlItems = controlItems;
-        this.activeFilters = filters;
-        this.activeSorting = activeSorting;
+    public interface ControlListener {
+        void updateControl(ControlItem item);
     }
 
-    static class FilterHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView name;
-        public AppCompatCheckBox check;
-        private ItemClickListener clickListener;
-
-        public FilterHolder(View itemView) {
-            super(itemView);
-
-            name = (TextView) itemView.findViewById(R.id.name);
-            check = (AppCompatCheckBox) itemView.findViewById(R.id.check);
-            itemView.setOnClickListener(this);
-            check.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (clickListener == null) return;
-            clickListener.click(v, getLayoutPosition());
-        }
-
-        public void setItemClickListener(ItemClickListener clickListener) {
-            this.clickListener = clickListener;
-        }
-    }
-
-
-    static class SortingHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class RadioControlHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView name;
         public AppCompatRadioButton active;
         private ItemClickListener clickListener;
 
-        public SortingHolder(View itemView) {
+        public RadioControlHolder(View itemView) {
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.name);
@@ -80,7 +58,6 @@ public class ControlsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-
     static class HeaderHolder extends RecyclerView.ViewHolder {
         public HeaderHolder(View itemView) {
             super(itemView);
@@ -97,12 +74,9 @@ public class ControlsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder = new HeaderHolder(headerView);
                 break;
             case Control.FILTER:
-                View filterView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_filter, parent, false);
-                viewHolder = new FilterHolder(filterView);
-                break;
             case Control.SORTING:
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sorting, parent, false);
-                viewHolder = new SortingHolder(view);
+                viewHolder = new RadioControlHolder(view);
                 break;
         }
         return viewHolder;
@@ -118,29 +92,29 @@ public class ControlsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((HeaderView) hh.itemView).setText(headerItem.getName());
                 break;
             case Control.FILTER:
-                FilterHolder fh = (FilterHolder) holder;
+                RadioControlHolder fh = (RadioControlHolder) holder;
                 FilterItem filterItem = (FilterItem) controlItems.get(position);
+
                 fh.name.setText(filterItem.getName());
-                fh.check.setChecked(isActive(filterItem.getFilter()));
+                fh.active.setChecked(filterItem.getFilter() == activeFilter);
 
                 fh.setItemClickListener((view, pos) -> {
-                    if (view.getId() != R.id.check) {
-                        AppCompatCheckBox check = (AppCompatCheckBox) view.findViewById(R.id.check);
-                        check.setChecked(!check.isChecked());
-                    }
                     FilterItem item = (FilterItem) controlItems.get(pos);
-                    setActive(item.getFilter());
+                    activeFilter = item.getFilter();
+                    controlListener.updateControl(item);
+                    notifyDataSetChanged();
                 });
-
                 break;
             case Control.SORTING:
-                SortingHolder sh = (SortingHolder) holder;
+                RadioControlHolder sh = (RadioControlHolder) holder;
                 SortingItem sortingItem = (SortingItem) controlItems.get(position);
                 sh.name.setText(sortingItem.getName());
                 sh.active.setChecked(sortingItem.getSorting() == activeSorting);
 
                 sh.setItemClickListener((view, pos) -> {
-                    activeSorting = ((SortingItem) controlItems.get(pos)).getSorting();
+                    SortingItem item = (SortingItem) controlItems.get(pos);
+                    activeSorting = item.getSorting();
+                    controlListener.updateControl(item);
                     notifyDataSetChanged();
                 });
                 break;
@@ -162,16 +136,21 @@ public class ControlsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return controlItems.get(position).getType();
     }
 
-
-    private boolean isActive(@Filter int filter) {
-        return (activeFilters & (1 << filter)) != 0;
+    public void addAll(List<ControlItem> items) {
+        controlItems.clear();
+        controlItems.addAll(items);
     }
 
-    private void setActive(@Filter int filter) {
-        if (isActive(filter)) {
-            activeFilters |= (1 << filter);
-        } else {
-            activeFilters ^= (1 << filter);
-        }
+    public void setSorting(@Sorting int sorting) {
+        activeSorting = sorting;
+    }
+
+    public void setFilter(@Filter int filter) {
+        activeFilter = filter;
+    }
+
+
+    public void setControlListener(ControlListener controlListener) {
+        this.controlListener = controlListener;
     }
 }

@@ -1,4 +1,4 @@
-package fili.alex.newsradiot.controls;
+package fili.alex.newsradiot.model;
 
 public class FilterItem extends ControlItem {
     @Filter

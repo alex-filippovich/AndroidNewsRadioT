@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Новости для Радио-Т</string>
     <string-array name="filters">
-        <item>Свежие</item>
+        <item>Все</item>
         <item>Обычные</item>
         <item>Гиковские</item>
     </string-array>

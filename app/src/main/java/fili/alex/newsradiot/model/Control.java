@@ -1,4 +1,4 @@
-package fili.alex.newsradiot.controls;
+package fili.alex.newsradiot.model;
 
 import android.support.annotation.IntDef;
 
